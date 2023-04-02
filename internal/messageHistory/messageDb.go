@@ -9,6 +9,10 @@ import (
 	"fmt"
 )
 
+var (
+	maxMessageHistory int64 = 10
+)
+
 type SavedMessage struct {
 	UserID   string `json:"UserID"`
 	Username string `json:"username"`
@@ -31,7 +35,7 @@ func SaveMessage(channelId string, message SavedMessage) error {
 	}
 
 	// Keep only the 10 last messages
-	if err := client.ZRemRangeByRank(ctx, key, 0, -11).Err(); err != nil {
+	if err := client.ZRemRangeByRank(ctx, key, 0, (maxMessageHistory+1)*-1).Err(); err != nil {
 		return err
 	}
 
@@ -41,7 +45,7 @@ func SaveMessage(channelId string, message SavedMessage) error {
 func GetChannelLastMessages(channelId string) ([]SavedMessage, error) {
 	key := fmt.Sprintf("channel:%s:message", channelId)
 
-	jsonMessages, err := client.ZRange(ctx, key, 0, 9).Result()
+	jsonMessages, err := client.ZRange(ctx, key, 0, maxMessageHistory-1).Result()
 	if err != nil {
 		return nil, err
 	}
