@@ -1,11 +1,12 @@
 version: "3.8"
 services:
   gobochiotte:
-    image: ghcr.io/emilweth/gobochiotte
+    build:
+      dockerfile: Dockerfile
+      context: .
     environment:
       DISCORD_TOKEN: ${DISCORD_TOKEN}
       OPENAI_TOKEN: ${OPENAI_TOKEN}
-      REDIS_ADDR: "redis:6379"
 
   redis:
     image: redis:7-alpine
