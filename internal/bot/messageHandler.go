@@ -10,7 +10,7 @@ import (
 )
 
 func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
-	log.WithField("Message", fmt.Sprintf("%s : %s", m.Author.Username, m.Content)).Info("New message")
+	log.WithField("Message", fmt.Sprintf("%s : %s", m.Author.Username, m.Content)).Debug("New message")
 
 	// Save the message
 	saveMessage(s, m)
@@ -23,7 +23,7 @@ func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 		err := replyToMessage(m)
 		if err != nil {
-			panic(err)
+			log.WithError(err).Panic("Error while sending reply")
 		}
 	}
 
@@ -31,27 +31,27 @@ func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 func saveMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 	log.WithField("Message", fmt.Sprintf("%s : %s", m.Author.Username, m.Content)).Debug("Saving message to redis")
-	formattedMessage, err := ReplaceMentionsByUsername(m.Content)
-	if err != nil {
-		log.WithError(err).Error("Error while replacing mentions by username")
-		formattedMessage = m.Content
-	}
+	formattedMessage := ReplaceMentionsByUsername(m.Content)
 	toSaveMessage := messageHistory.SavedMessage{
 		UserID:   m.Author.ID,
 		Username: m.Author.Username,
 		Text:     formattedMessage,
 		IsSelf:   m.Author.ID == s.State.User.ID,
 	}
-	err = messageHistory.SaveMessage(m.ChannelID, toSaveMessage)
+	err := messageHistory.SaveMessage(m.ChannelID, toSaveMessage)
 	if err != nil {
-		log.WithError(err).WithField("message", toSaveMessage).Error("Cannot save message")
-		panic(err)
+		log.WithError(err).WithField("message", toSaveMessage).Panic("Cannot save message")
 	}
 }
 
 func replyToMessage(m *discordgo.MessageCreate) error {
 	messages, err := messageHistory.GetChannelLastMessages(m.ChannelID)
 	if err != nil {
+		return err
+	}
+	err = dg.ChannelTyping(m.ChannelID)
+	if err != nil {
+		log.WithError(err).Error("Error while sending typing status")
 		return err
 	}
 	reply, err := openaiClient.GenerateResponse(messages)
