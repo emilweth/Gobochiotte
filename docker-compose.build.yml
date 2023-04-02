@@ -8,7 +8,8 @@ services:
       DISCORD_TOKEN: ${DISCORD_TOKEN}
       OPENAI_TOKEN: ${OPENAI_TOKEN}
       REDIS_ADDR: "redis:6379"
-
+    command:
+      - "--verbosity=debug"
   redis:
     image: redis:7-alpine
     ports:
