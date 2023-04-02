@@ -1,8 +1,9 @@
 package bot
 
 import (
-	log "github.com/sirupsen/logrus"
 	"regexp"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var (

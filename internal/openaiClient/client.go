@@ -3,15 +3,17 @@ package openaiClient
 import (
 	"Gobochiotte/internal/messageHistory"
 	"context"
+	"os"
+	"strings"
+
 	"github.com/mrz1836/go-sanitize"
 	"github.com/sashabaranov/go-openai"
 	log "github.com/sirupsen/logrus"
-	"os"
-	"strings"
 )
 
 var (
 	openAIClient *openai.Client
+	messages     []openai.ChatCompletionMessage
 )
 
 func init() {
@@ -20,7 +22,6 @@ func init() {
 
 func GenerateResponse(discordMessageHistory []messageHistory.SavedMessage) (string, error) {
 
-	var messages []openai.ChatCompletionMessage
 	messages = append(messages, openai.ChatCompletionMessage{
 		Role:    openai.ChatMessageRoleSystem,
 		Content: "Tu es Robochiotte. Un assistant présent sur le Discord de MisterMV qui se fait passer pour un humain. Personne ne doit savoir que tu es un robot.",

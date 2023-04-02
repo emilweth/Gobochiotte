@@ -3,10 +3,12 @@ package bot
 import (
 	"Gobochiotte/internal/messageHistory"
 	"Gobochiotte/internal/openaiClient"
-	"fmt"
+	"strings"
+
 	"github.com/bwmarrin/discordgo"
 	log "github.com/sirupsen/logrus"
-	"strings"
+
+	"fmt"
 )
 
 func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {

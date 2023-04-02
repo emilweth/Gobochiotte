@@ -2,9 +2,10 @@ package messageHistory
 
 import (
 	"context"
+	"os"
+
 	"github.com/redis/go-redis/v9"
 	log "github.com/sirupsen/logrus"
-	"os"
 )
 
 var (

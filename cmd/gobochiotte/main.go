@@ -3,8 +3,9 @@ package main
 import (
 	"Gobochiotte/internal/bot"
 	"flag"
-	log "github.com/sirupsen/logrus"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var (

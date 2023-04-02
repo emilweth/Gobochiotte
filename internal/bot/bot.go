@@ -1,11 +1,12 @@
 package bot
 
 import (
-	"github.com/bwmarrin/discordgo"
-	log "github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/bwmarrin/discordgo"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
