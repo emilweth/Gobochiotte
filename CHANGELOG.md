@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2023-04-02
+### :sparkles: New Features
+- [`73adbb6`](https://github.com/emilweth/Gobochiotte/commit/73adbb6184035588aa8beba788c28a7986154818) - **docker**: missing REDIS_ADDR in the build yml *(commit by [@emilweth](https://github.com/emilweth))*
+- [`4d25fa8`](https://github.com/emilweth/Gobochiotte/commit/4d25fa865947d7d9791b8c7f4bfb98d5592e6a97) - **dev**: open redis port *(commit by [@emilweth](https://github.com/emilweth))*
+- [`9c299f9`](https://github.com/emilweth/Gobochiotte/commit/9c299f904cfb366b4ed849707cf6ade7416c4062) - **dev**: set verbosity to debug *(commit by [@emilweth](https://github.com/emilweth))*
+
+### :recycle: Refactors
+- [`15812cd`](https://github.com/emilweth/Gobochiotte/commit/15812cdac0d314e31396799f0ff50559b7268dcb) - **messagedb**: make max history variable *(commit by [@emilweth](https://github.com/emilweth))*
+
+
 ## [0.1.0] - 2023-04-02
 ### :sparkles: New Features
 - [`2d4358e`](https://github.com/emilweth/Gobochiotte/commit/2d4358e939914ae7fb5ed447887005318d91e195) - add docker build *(commit by [@emilweth](https://github.com/emilweth))*
@@ -30,3 +40,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 [0.1.0]: https://github.com/emilweth/Gobochiotte/compare/0.0.1...0.1.0
+[0.2.0]: https://github.com/emilweth/Gobochiotte/compare/0.1.0...0.2.0
