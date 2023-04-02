@@ -21,8 +21,7 @@ func init() {
 
 	_, err := client.Ping(ctx).Result()
 	if err != nil {
-		log.WithError(err).Error("Redis connection failed")
-		panic(err)
+		log.WithError(err).Panic("Redis connection failed")
 	}
 	log.Info("Redis connected")
 }
