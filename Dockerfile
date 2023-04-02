@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN go build -o /gobochiotte Gobochiotte/cmd
+RUN go build -o /gobochiotte Gobochiotte/cmd/gobochiotte
 
 ## Deploy
 FROM scratch
