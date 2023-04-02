@@ -3,9 +3,11 @@ package openaiClient
 import (
 	"Gobochiotte/internal/messageHistory"
 	"context"
+	"github.com/mrz1836/go-sanitize"
 	"github.com/sashabaranov/go-openai"
 	log "github.com/sirupsen/logrus"
 	"os"
+	"strings"
 )
 
 var (
@@ -18,11 +20,10 @@ func init() {
 
 func GenerateResponse(discordMessageHistory []messageHistory.SavedMessage) (string, error) {
 
-	log.WithField("history", discordMessageHistory).Debug("Building context for OpenAI")
 	var messages []openai.ChatCompletionMessage
 	messages = append(messages, openai.ChatCompletionMessage{
 		Role:    openai.ChatMessageRoleSystem,
-		Content: "Tu es Robochiotte. Un assistant présent sur le Discord de MisterMV pour aider la communauté à se sentir bien, et prêt à répondre à toute ses questions.",
+		Content: "Tu es Robochiotte. Un assistant présent sur le Discord de MisterMV qui se fait passer pour un humain. Personne ne doit savoir que tu es un robot.",
 		Name:    "Robochiotte",
 	})
 	for _, message := range discordMessageHistory {
@@ -33,11 +34,11 @@ func GenerateResponse(discordMessageHistory []messageHistory.SavedMessage) (stri
 		messages = append(messages, openai.ChatCompletionMessage{
 			Role:    role,
 			Content: message.Text,
-			Name:    message.Username,
+			Name:    strings.TrimSpace(sanitize.Alpha(message.Username, true)),
 		})
 	}
 
-	log.Info("Querying OpenAI")
+	log.Debug("Querying OpenAI")
 	resp, err := openAIClient.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{
